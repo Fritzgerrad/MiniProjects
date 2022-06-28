@@ -1,6 +1,6 @@
 var check = 0;
-var firstNum = document.getElementById(firstNum);
-var secNum = document.getElementById(secondNum);
+var firstNum = document.getElementById(firstNum).innerHTML;
+var secNum = document.getElementById(secondNum).innerHTML;
 
 function toAdd(){
 check = 1;
@@ -30,15 +30,16 @@ function divide(){
 
 function solve(){
     if (check == 1){
-        add();
+        var result = add();
     }
     if (check == 2){
-        subtract();
+        var result = subtract();
     }
     if (check == 3){
-        divide();
+        var result = divide();
     }
     if (check == 4){
-        multiply();
+        var result = multiply();
     }
+    document.getElementById("result").innerHTML = result;
 }

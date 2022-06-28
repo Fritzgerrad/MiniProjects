@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html lang="en">
+    <head>
+        <link rel = 'stylesheet' href = 'FilterStyle.css'>
+        <title>IMAGE FILTER BY FRITZGERRAD</title>
+    </head>
+    
+    <body>
+        <h1> IMAGE FILTER </h1>
+        <h2> <b><em>by Fritzgerrad</em></b></h2>
+        <p id="subby">
+        This program will enable a user to upload an image and apply filters to it.
+        <p>
+        <b><em>Load File: </em><b>
+        <input type="file" id="finput" accept="image/*" multiple="false" onchange="upLoad()">
+        </p>
+        <canvas id="can1"> </canvas>
+        <p>
+            Basic: <br>
+        <input type="button" value="Make Red" id="red" onclick = "makeRed()">
+            <input type="button" value="Make Green" id="green" onclick = "makeGreen()">
+        <input type="button" value="Make Blue" id="blue" onclick = "makeBlue()"><br><br>
+            Intermidiate:<br>
+        <input type="button" value="Make Blur" id="blur" onclick = "makeBlur()">
+        <input type="button" value="Make Grey" id="grey" onclick = "makeGrey()">
+        
+        <input type="button" value="Make Rainbow" id="rainbow" onclick = "makeRainbow()"><br><br>
+        Custom: <br>
+        <input type="button" value="Behind bars" id="window" onclick = "jail()">
+        <input type="button" value="Black Pixel" id="ated" onclick = "pixelated()">
+        <input type="button" value="White Pixel" id="wated" onclick = "pixelatedWhite()"><br><br>
+        
+        
+        <input type="button" value="Undo" id="undo" onclick = "upLoad()">
+                
+        </p>
+        <script
+        src="https://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js">
+        </script>
+        <script src = imagefilter.js></script>
+    </body>
+</html>

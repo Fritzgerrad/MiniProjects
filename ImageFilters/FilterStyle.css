@@ -1,0 +1,121 @@
+body{
+    background-color: aquamarine;
+    color:darkred;
+    font-size:20px;  
+    font-family: Helvetica;
+  }
+  h1{
+  
+    color: darkred;
+    
+  }
+  h2{
+    font-size:20px;
+    font-family:Papyrus;
+  }
+  #gray{
+    font-size:20px;
+  }
+  canvas{
+    border:3px solid darkblue;
+    margin: 10pt;
+  }
+  #p1{margin:10pt;
+    font-weight: bold;
+  }
+  #tinput{
+    font-size:20px;
+    color:darkred;
+  }
+  #finput{
+    font-size:20px;
+    color:blue;
+  }
+  #subby{
+    background-color: Tomato;
+    color:darkblue;
+    border-radius:10px;
+    font-size: 20px;
+  }
+  #red{
+    border: solid 5px red;
+    font-size: 25px;
+    background-color:pink;
+    border-radius: 20px;
+    color:red;
+      
+  }
+  #blue{
+    font-size: 25px;
+    background-color:cyan;
+    border-radius: 20px;
+    color:blue;
+    border: solid 5px blue;
+  }
+  #green{
+    font-size: 25px;
+    border: solid 5px green;
+    background-color:lightgreen;
+    border-radius: 20px;
+    color:green;
+  }
+  #grey{
+    font-size: 25px;
+    background-color:grey;
+    border-radius: 20px;
+    color:black;
+    border: solid 5px black;
+    padding:2px;
+  }
+  #rainbow{
+    font-size: 25px;
+    background: linear-gradient(red,orange,yellow,green,blue,indigo,violet);
+    border-radius: 20px;
+    color:black;
+    border:solid 3px violet;
+    padding:2px;
+  }
+  #blur{
+    margin:10px;
+    font-size: 25px;
+    background: linear-gradient(red,green,blue);
+    border-radius: 20px;
+    color:white;
+    border: solid 5px darkred;
+  }
+  #undo{
+    font-size: 25px;
+    background-color:white;
+    border-radius: 10px;
+    color:black;
+  }
+  #window{
+    margin:10px;
+    font-size: 20px;
+    background-color:orange;
+    border-radius: 10px;
+    color:black;
+    border-style:dashed;
+    border-width:9px;
+    border-color: black;
+  }
+  #ated{
+    margin:10px;
+    font-size: 20px;
+    background-color:black;
+    border-radius: 10px;
+    color:white;
+    border-style:dotted;
+    border-width:9px;
+    border-color: white;
+  }
+  #wated{
+    margin:10px;
+    font-size: 20px;
+    background-color:white;
+    border-radius: 10px;
+    color:black;
+    border-style:dotted;
+    border-width:9px;
+    border-color: black;
+  }

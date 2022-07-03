@@ -1,19 +1,32 @@
 import random
-def mojify(object):
+from tkinter import *
+import tkinter.font as font
+import time
+#from PIL import ImageTk, Image
+
+rps = Tk()
+rps.geometry("500x500")
+rps.title("ROCK PAPER SCISSORS")
+user = ""
+comp = ""
+ans  = ""
+rps['background'] = 'lime'
+myFont = font.Font(size=30)
+#bg =  PhotoImage(file = "rps.jpg")
+def mojifycomp(object):
 
     if object == "scissors":
-        return "✂"
+        return "Computer chose: ✂"
     if object == "paper":
-        return "🧾"
+        return "Computer chose: 🧾"
     if object == "rock":
-        return "🗿"
+        return "Computer chose: 🗿"
 
     else:
         return object
-def rps():
-    user = ""
-    comp = ""
 
+def compChose():
+    global comp
     comp_play = random.randint(1,3)
     if comp_play == 1:
         comp = "rock"
@@ -23,46 +36,100 @@ def rps():
 
     if comp_play == 3:
         comp = "scissors"
+    Label(rps,text = mojifycomp(comp), font = "poppins").pack(pady=10)
 
-    user = input("Play your Hand \n")
-    
-    
-    user = user.lower()
-    comp = comp.lower()
-    print(" User: ",mojify(user))
-    print(" Computer: ",mojify(comp))
-    #if user != "rock" or user!="paper" or user!="scissors":
-        #print("PLEASE PLAY A CORRECT HAND")
-       # rps()
 
+def setRock():
+    global user
+    user = "rock"
+    compChose()
+    decide()
+    Label(rps,text = mojify(user), font = "poppins").pack(pady=10)
+    Label(rps,text = ans, font = "poppins").pack(pady=10)['font']=myFont
+   
+
+def setPaper():
+    global user
+    user = "paper"
+    compChose()
+    decide()
+    Label(rps,text = mojify(user), font = "poppins").pack(pady=10)
+    Label(rps,text = ans, font = "poppins").pack(pady=10)['font']=myFont
+    
+
+def setScissors():
+    global user
+    user = "scissors"
+    compChose()
+    decide()
+    Label(rps,text = mojify(user), font = "poppins").pack(pady=10)
+    Label(rps,text = ans, font = "poppins").pack(pady=10)['font']=myFont
+   
+
+def mojify(object):
+
+    if object == "scissors":
+        return "You chose: ✂"
+    if object == "paper":
+        return "You chose: 🧾"
+    if object == "rock":
+        return "You chose: 🗿"
+
+    else:
+        return object
+
+def decide():
+    global ans
     if comp == "rock":
         if user == "paper":
-            print("PAPER COVERS ROCK, USER WINS")
+            ans = "PAPER COVERS ROCK, YOU WIN"
 
         if user == "rock":
-            print("ITS A TIE")
+            ans = "ITS A TIE"
 
         if user == "scissors":
-            print("ROCK BREAKS SCISSORS, COMPUTER WINS")
+            ans = "ROCK BREAKS SCISSORS, COMPUTER WINS"
 
     elif comp == "scissors":
         if user == "paper":
-            print("SCISSORS CUTS PAPER, COMPUTER WINS")
+            ans = "SCISSORS CUTS PAPER, COMPUTER WINS"
 
         if user == "rock":
-            print("ROCK BREAKS SCISSORS, USER WINS")
+            ans = "ROCK BREAKS SCISSORS, YOU WIN"
 
         if user == "scissors":
-            print("IT'S A TIE")
+            ans = "IT'S A TIE"
 
     elif comp =="paper":
         if user == "paper":
-            print("IT'S A TIE")
+            ans = "IT'S A TIE"
 
         if user == "rock":
-            print("PAPER COVERS ROCK, COMPUTER WINS")
+            ans = "PAPER COVERS ROCK, COMPUTER WINS"
 
         if user == "scissors":
-            print("SCISSORS CUTS PAPER, USER WINS")
+            ans = "SCISSORS CUTS PAPER, YOU WIN"
+    
 
-rps()
+Label(rps,text = "ROCK PAPER SCISSORS GAME", font = "poppins").pack(pady=10)
+
+rock = Button(rps,text='🗿',command=setRock,bg = "brown")
+#rock.invoke()
+rock.pack(pady=7)
+rock['font']=myFont
+
+paper = Button(rps,text='🧾',command=setPaper,bg="#f5f5f0")
+paper.pack(pady=7)
+paper['font']=myFont
+
+scissors = Button(rps,text='✂',command=setScissors, bg = "#B0C4DE",relief = "sunken")
+scissors.pack(pady=7)
+scissors['font']=myFont
+
+
+Label(rps,text = mojify(user), font = "poppins").pack(pady=10)
+
+print("user is", user)
+print("comp is ",comp)
+rps.mainloop()
+

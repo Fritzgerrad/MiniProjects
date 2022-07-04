@@ -10,8 +10,10 @@ rps.title("ROCK PAPER SCISSORS")
 user = ""
 comp = ""
 ans  = ""
-rps['background'] = 'lime'
+bg_image = PhotoImage(file = "stop_img.png") 
+rps.config(bg=bg_image)
 myFont = font.Font(size=30)
+intro = Label(rps, text = "Choose One")
 #bg =  PhotoImage(file = "rps.jpg")
 def mojifycomp(object):
 

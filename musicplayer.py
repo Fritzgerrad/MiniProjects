@@ -2,6 +2,7 @@
 import tkinter as tk
 import fnmatch
 import os
+from turtle import down
 from pygame import mixer
 
 #create a new Tkinter module named canvas and set the title, size and background color
@@ -33,6 +34,7 @@ def select():
     mixer.music.load(rootpath + "\\" + listBox.get("anchor"))
     #plays the song
     mixer.music.play()
+    canva.config(image = album_image )
 
 def stop():
     #stops the music
@@ -122,6 +124,9 @@ stopButton.pack(pady = 15, in_ = top, side = 'left')
 playButton = tk.Button(canvas,text = 'Play',image = play_img,bg='black',borderwidth = 0,command=select)
 #The in_ parameter is used to specify that the playButton is to be placed in the frame top at the left side
 playButton.pack(pady = 15, in_ = top, side = 'left')
+album_image = tk.PhotoImage("lover.png")
+canva = tk.Canvas(canvas,width = 200, height = 110 )
+canva.pack(in_ = top, side = 'bottom')
 
 #Adding the pause Button
     

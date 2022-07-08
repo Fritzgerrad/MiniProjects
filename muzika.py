@@ -10,7 +10,9 @@ import datetime
 import time
 
 songLength = 0
+file = ""
 roots = []
+tracks = dict()
 #create a new Tkinter module named canvas and set the title, size and background color
 canvas = tk.Tk()
 canvas.title("Fritzgerrad's Music Player")
@@ -41,13 +43,31 @@ album_image = tk.PhotoImage(file = "ima.png")
 
 #method that selects the song and plays it
 def getPaths(songname):
-    global roots
-    for s in roots:
-        song = s+"\\"+songname
-        if  os.path.exists(song):
-            return song
+    global tracks
+    track = tracks[songname]+"\\"+songname
+    print(tracks[songname])
+    return track
+        
+def songbar(pos):
+    global songLength   
+    where = str(datetime.timedelta(seconds = int(pos)))
+    if where[0]=='0':
+        where = where[3:]
+    label0.config(text=where)
+    mixer.music.load(file)
+    mixer.music.play(loops=0, start=int(pos))
+    while mixer.get_busy() == True:
+        time.sleep(1)
+        count+=1
+        w2.set(count)
+        print(count)
+        where = str(datetime.timedelta(seconds = int(count)))
+        if where[0]=='0':
+            where = where[3:]
+        label0.config(text=where)
         
 def select():
+    global file
     global songLength
     #Sets the text of label to the selected song so that it displays is
     theSong = listBox.get("anchor")
@@ -65,8 +85,20 @@ def select():
     mixer.music.get_pos
     album_display.config(image = base)
     slider()
-    time.sleep(songLength+1)
-    play_next()
+    print(mixer.get_busy())
+    count = 0
+    while count < songLength:
+        
+        #count = int(mixer.music.get_pos())
+        w2.set(count)
+        where = str(datetime.timedelta(seconds = count))
+        
+        if where[0]=='0':
+            where = where[3:]
+        label0.config(text=where)
+        time.sleep(1)
+        count+=1
+    #play_next()
 
 def stop():
     #stops the music
@@ -100,8 +132,7 @@ def play_next():
     #Sets next_song as the currently selected song
     listBox.select_set(next_song)
     slider()
-    time.sleep(songLength+1)
-    play_next()
+    #play_next()
     
 def play_prev():
     global songLength
@@ -241,8 +272,7 @@ album_display.pack(padx = 15, pady = 15,in_ = very, side = "left")
 first = tk.Frame(canvas, bg = 'pink')
 first.pack(padx = 10, pady =5,anchor = 'center')
 #Add label that displays the name of the selected song when select() is called
-w2 = tk.Scale(canvas, from_=0, to=200, length = 350, sliderlength= 4,highlightbackground="pink",orient="horizontal",troughcolor = "black",borderwidth=1,width=3, bd = 1, bg ="pink")
-w2.set(23)
+w2 = tk.Scale(canvas, from_=0, to=200, length = 350, command = songbar,showvalue=0,sliderlength= 4,highlightbackground="pink",orient="horizontal",troughcolor = "black",borderwidth=1,width=3, bd = 1, bg ="pink")
 w2.pack(in_=first,side = "top")
 label0 = tk.Label(canvas, text = '-:--',bg = 'pink',fg = 'black', font = ('poppins',10))
 label1 = tk.Label(canvas, text = "-:--",bg = 'pink',fg = 'black', font = ('poppins',10))
@@ -301,7 +331,7 @@ volume = tk.Scale(canvas, from_=0, to=10,tickinterval=0.1, relief = "flat",troug
 volume.set(7)
 volume.pack(pady = 10,in_ = very,side =  "right")
 
-#tk.Button(canvas, text='Set', command=setVolume).pack(in_ = top,side =  "right")
+tk.Label(canvas, text='Volume',font=('poppins',5)).pack(in_ = very,side =  "right")
 
 #Adding the pause Button
     
@@ -311,10 +341,19 @@ volume.pack(pady = 10,in_ = very,side =  "right")
 #loops over all directies, files in the path specified
 for root,dirs,files in os.walk(rootpath):
     roots .append(root)
-    #loops over all files that match the pattern specified
+
+for root,dirs,files in os.walk(rootpath):
     for filename in fnmatch.filter(files,pattern):
         #adds the file to the listBox
-        listBox.insert('end',filename)
+        for s in roots:
+            song = s+"\\"+filename
+            if  os.path.exists(song):
+                tracks[filename]=s
+                
+#tracks = sorted(tracks)
+#print(tracks)
 
+for key in tracks:
+    listBox.insert('end',key)
 
 canvas.mainloop()

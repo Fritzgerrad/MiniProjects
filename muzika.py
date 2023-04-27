@@ -21,7 +21,7 @@ canvas.config(bg="pink")
 
 #set the directory folder of the songs to choose from
 #rootpath = "C:\\Users\DELL\Music\Music\Taylor Swift - Lover (2019) [320]"
-rootpath = "C:\\Users\DELL\Music"
+rootpath = "/home/fritzgerrad/Music"
 
 #ask the program to only choose files of this type
 pattern = "*.mp3"
@@ -30,75 +30,96 @@ pattern = "*.mp3"
 mixer.init()
 
 #Creating the image Objects
-prev_img  = tk.PhotoImage(file = "prev_img.png")
-stop_img  = tk.PhotoImage(file = "stop_img.png")
-play_img  = tk.PhotoImage(file = "play_img.png")
-pause_img  = tk.PhotoImage(file = "pause_img.png")
-next_img  = tk.PhotoImage(file = "next_img.png")
-shuff_img = tk.PhotoImage(file = "shuff.png")
-repeat_img = tk.PhotoImage(file = "repeat.png")
-base = tk.PhotoImage(file = "girl.png")
-album_image = tk.PhotoImage(file = "ima.png")
+prev_img  = tk.PhotoImage(file = "logos/prev_img.png")
+stop_img  = tk.PhotoImage(file = "logos/stop_img.png")
+play_img  = tk.PhotoImage(file = "logos/play_img.png")
+pause_img  = tk.PhotoImage(file = "logos/pause_img.png")
+next_img  = tk.PhotoImage(file = "logos/next_img.png")
+shuff_img = tk.PhotoImage(file = "logos/shuff.png")
+repeat_img = tk.PhotoImage(file = "logos/repeat.png")
+base = tk.PhotoImage(file = "images/girl.png")
+album_image = tk.PhotoImage(file = "images/ima.png")
 #album_image = tk.PhotoImage("lovercover.png")
 
 #method that selects the song and plays it
 def getPaths(songname):
     global tracks
-    track = tracks[songname]+"\\"+songname
+    track = tracks[songname]+"//"+songname
     print(tracks[songname])
     return track
         
-def songbar(pos):
-    global songLength   
-    where = str(datetime.timedelta(seconds = int(pos)))
-    if where[0]=='0':
-        where = where[3:]
-    label0.config(text=where)
-    mixer.music.load(file)
-    mixer.music.play(loops=0, start=int(pos))
-    while mixer.get_busy() == True:
-        time.sleep(1)
-        count+=1
-        w2.set(count)
-        print(count)
-        where = str(datetime.timedelta(seconds = int(count)))
-        if where[0]=='0':
-            where = where[3:]
-        label0.config(text=where)
+# def songbar(pos):
+#     global songLength   
+#     where = str(datetime.timedelta(seconds = int(pos)))
+#     if where[0]=='0':
+#         where = where[3:]
+#     label0.config(text=where)
+#     mixer.music.load(file)
+#     mixer.music.play(loops=0, start=int(pos))
+#     # while mixer.get_busy() == True:
+    #     time.sleep(1)
+    #     count+=1
+    #     w2.set(count)
+    #     print(count)
+    #     where = str(datetime.timedelta(seconds = int(count)))
+    #     if where[0]=='0':
+    #         where = where[3:]
+    #     label0.config(text=where)
         
+# def select():
+#     global file
+#     global songLength
+#     #Sets the text of label to the selected song so that it displays is
+#     theSong = listBox.get("anchor")
+#     label.config(text=theSong)
+#     #loads the selected song
+#     #mixer.music.load(rootpath + "\\" + listBox.get("anchor"))
+#     #song = MP3(rootpath + "\\" + listBox.get("anchor"))
+#     file = getPaths(theSong)
+#     mixer.music.load(file)
+#     song = MP3(file)
+#     songLength = song.info.length
+#     print(songLength)
+#     #plays the song
+#     mixer.music.play()
+#     album_display.config(image = base)
+#     #slider()
+#     print("status", mixer.get_busy())
+#     # count = 0
+#     # while count < songLength:
+#     #     def set_slider():
+#     #         current_pos = mixer.music.get_pos()/1000
+#     #         w2.set(current_pos)
+#     #         canvas.after(100,set_slider)
+        
+        
+        
+        
+#         #count = int(mixer.music.get_pos())
+#         # w2.set(count)
+#         # where = str(datetime.timedelta(seconds = count))
+        
+#         # if where[0]=='0':
+#         #     where = where[3:]
+#         # label0.config(text=where)
+#         # time.sleep(1)
+#         # count+=1
+        
+    
+#     #play_next()
+
 def select():
     global file
     global songLength
-    #Sets the text of label to the selected song so that it displays is
     theSong = listBox.get("anchor")
     label.config(text=theSong)
-    #loads the selected song
-    #mixer.music.load(rootpath + "\\" + listBox.get("anchor"))
-    #song = MP3(rootpath + "\\" + listBox.get("anchor"))
     file = getPaths(theSong)
     mixer.music.load(file)
     song = MP3(file)
     songLength = song.info.length
-    print(songLength)
-    #plays the song
     mixer.music.play()
-    mixer.music.get_pos
     album_display.config(image = base)
     slider()
-    print(mixer.get_busy())
-    count = 0
-    while count < songLength:
-        
-        #count = int(mixer.music.get_pos())
-        w2.set(count)
-        where = str(datetime.timedelta(seconds = count))
-        
-        if where[0]=='0':
-            where = where[3:]
-        label0.config(text=where)
-        time.sleep(1)
-        count+=1
-    #play_next()
 
 def stop():
     #stops the music
@@ -241,19 +262,33 @@ def repeat():
     #plays the song
     mixer.music.play()
     slider()
-    repeat()
+    canvas.after(int(songLength)*1000,repeat)
+    
+def setVolume(vol):
+    if mixer.music.get_busy():
+        vol = int(vol)
+        vol = 1 - vol/10
+        mixer.music.set_volume(vol)
 
-def slider():
-    global songLength
-    last = int(songLength+1) 
-    w2['to'] = last
-    lent = str(datetime.timedelta(seconds = last))
-    if lent[0]=='0':
-        lent = lent[3:]
+# def slider():
+#     global songLength
+#     last = int(songLength+1) 
+#     w2['to'] = last
+#     lent = str(datetime.timedelta(seconds = last))
+#     if lent[0]=='0':
+#         lent = lent[3:]
    
-    label1['text'] = lent
-    label0['text'] = '0:00'
+#     label1['text'] = lent
+#     label0['text'] = '0:00'
 #Create a listBox where the songs to choose from would be displayed
+def slider():
+    count = 0
+    while count < songLength:
+        current_pos = mixer.music.get_pos()/1000
+        w2.set(current_pos)
+        canvas.after(1000)
+        count += 1
+        
 listBox = tk.Listbox(canvas,fg = "brown", bg = "LightSkyBlue", width = 75, height = 7,font = ("Giddyup Std",9))
 listBox.pack(padx = 15, pady = 15)
 
@@ -272,7 +307,7 @@ album_display.pack(padx = 15, pady = 15,in_ = very, side = "left")
 first = tk.Frame(canvas, bg = 'pink')
 first.pack(padx = 10, pady =5,anchor = 'center')
 #Add label that displays the name of the selected song when select() is called
-w2 = tk.Scale(canvas, from_=0, to=200, length = 350, command = songbar,showvalue=0,sliderlength= 4,highlightbackground="pink",orient="horizontal",troughcolor = "black",borderwidth=1,width=3, bd = 1, bg ="pink")
+w2 = tk.Scale(canvas, from_=0, to=200, length = 350, command = slider,showvalue=0,sliderlength= 4,highlightbackground="pink",orient="horizontal",troughcolor = "black",borderwidth=1,width=3, bd = 1, bg ="pink")
 w2.pack(in_=first,side = "top")
 label0 = tk.Label(canvas, text = '-:--',bg = 'pink',fg = 'black', font = ('poppins',10))
 label1 = tk.Label(canvas, text = "-:--",bg = 'pink',fg = 'black', font = ('poppins',10))
@@ -322,11 +357,7 @@ playallButton.pack(pady = 15, in_ = down, side = 'top')
 repeatButton = tk.Button(canvas,text = 'Repeat',bg='white',borderwidth = 0,image = repeat_img, command=repeat)
 #The in_ parameter is used to specify that the playButton is to be placed in the frame top at the left side
 repeatButton.pack(pady = 15, in_ = down, side = 'top')
-def setVolume(vol):
-    if mixer.music.get_busy():
-        vol = int(vol)
-        vol = vol/10
-        mixer.music.set_volume(vol)
+
 volume = tk.Scale(canvas, from_=0, to=10,tickinterval=0.1, relief = "flat",troughcolor = "black", orient="vertical",command=setVolume,borderwidth=1,width=3,sliderlength = 10, sliderrelief="ridge",background = "pink",bd = 10, bg ="pink",border = 1,highlightbackground="pink",showvalue = 0,length=170)
 volume.set(7)
 volume.pack(pady = 10,in_ = very,side =  "right")
@@ -346,7 +377,7 @@ for root,dirs,files in os.walk(rootpath):
     for filename in fnmatch.filter(files,pattern):
         #adds the file to the listBox
         for s in roots:
-            song = s+"\\"+filename
+            song = s+"//"+filename
             if  os.path.exists(song):
                 tracks[filename]=s
                 
